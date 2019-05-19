@@ -1,4 +1,4 @@
-# scR
+# 畅想世界
 Hello,
 
 I am Zhang, this is my study notes.
