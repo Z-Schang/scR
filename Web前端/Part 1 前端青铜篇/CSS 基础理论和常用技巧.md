@@ -182,50 +182,31 @@ position:
 
 #### 几个重要概念
 
-~~~css
-1）包含块
-	父于子是相对的，儿子不是所有人的儿子，相对他亲生父亲才是儿子
-2）层叠上下文	
-	背景边框是装饰属性，层叠级别低；	【就像店门口玻璃的贴纸】
-	浮动块用于布局，层叠级别中；		 【店内各产品货架的布局】
-	行内元素为内容，层叠级别最高。		【重要商品在货架上的布局】
-3）BFC/IFC		
-	格式上下文(FC)，分为块级BFC和行级LFC。
-	一个HTML元素要创建BFC，则满足下列的任意一个或多个条件即可：
-		1、float的值不是none。
-		2、position的值不是static或者relative。
-		3、display的值是inline-block、table-cell、flex、table-caption或者inline-flex
-		4、overflow的值不是visible
-		* 块级概念：display为block\table\list-item的元素
+1. 包含块
+  父于子是相对的，儿子不是所有人的儿子，相对他亲生父亲才是儿子
+2. 层叠上下文	
+  背景边框是装饰属性，层叠级别低；	【就像店门口玻璃的贴纸】
+  浮动块用于布局，层叠级别中；		 【店内各产品货架的布局】
+  行内元素为内容，层叠级别最高。	【重要商品在货架上的布局】
+3. BFC/IFC	
+  1. 特点：
+    ​	相邻块盒子垂直边距叠加
+    ​	左边界紧贴容器左边
+    ​	内部新BFC不会与float元素区域重叠
+    ​	内部子元素不影响外面。格式上下文(FC)，分为块级BFC和行级LFC。
+  2. 创建BFC，则满足下列的任意一个或多个条件即可：
+    ​	1、float的值不是none。
+    ​	2、position的值不是static或者relative。
+    ​	3、display的值是inline-block、table-cell、flex、table-caption或者inline-flex
+    ​	4、overflow的值不是visible
+    ​	块级概念：display为block\table\list-item的元素
+  3. BFC用途：
+    ​	创建BFC避免垂直外边距叠加
+    ​	清除浮动
+    ​	实现自适应
 
-	BFC特点：
-		相邻块盒子垂直边距叠加
-		左边界紧贴容器左边
-		内部新BFC不会与float元素区域重叠
-		内部子元素不影响外面。
-	BFC用途：
-		创建BFC避免垂直外边距叠加
-		清除浮动
-		实现自适应
-
-	overflow:hidden;原理：
-		如果一元素为BFC,则浮动子元素高度也算入该元素高度。
-
-4）display:table-cell;使元素具有td元素特点。应用于：
-	图片垂直居中于元素
-		使用display:table-cell;vertical-align:middle;实现大小不固定图片的垂直居中效果
-		父元素{display:table-cell;vertical-align:middle;}
-		子元素{vertical-align:middle;}
-	等高布局
-		父元素{display:table-row;}
-		子元素{display:table-cell;vertical-align:middle;text-align:center;}
-	自动平均划分元素，在一行显示
-		可应用于导航。当给父元素宽度时，父元素宽度会根据子元素个数进行自动平均划分
-		父元素{display:table;width:300px}
-		子元素{display:table-cell;}
-~~~
-
-
+overflow:hidden;原理：
+​	如果一元素为BFC,则浮动子元素高度也算入该元素高度。
 
 
 
@@ -275,71 +256,72 @@ visibility:hidden;隐藏后还是占位置
 
 
 
-文本效果
+**文本效果**
 
-~~~css
-在背景为 logo 的 h1 标签中置入文字后设置 text-indent:-9999px; 可隐藏文字内容，有利于SEO。
-text-align 对文字、行内元素、inline-block元素起作用，但对块元素不起作用。
-text-align:center;	实现文字、行内元素以及inline-block元素的水平居中，在父元素定义。
-margin:0 auto;		实现块元素的水平居中，在当前元素中定义。
-line-height是两行文字 基线之间 的距离。
-可以定义height和line-height属性值相等，实现 单行文字 的垂直居中。
-vertical-align:middle;	实现文字、行内元素以及inline-block元素的垂直居中，块无效。
-~~~
+- 在背景为 logo 的 h1 标签中置入文字后设置 text-indent:-9999px; 可隐藏文字内容，有利于SEO。
+
+- text-align 对文字、行内元素、inline-block元素起作用，但对块元素不起作用。
+
+- text-align:center;	实现文字、行内元素以及inline-block元素的水平居中，在父元素定义。
+
+- margin:0 auto;		实现块元素的水平居中，在当前元素中定义。
+
+- line-height是两行文字 基线之间 的距离。
+
+  可以定义height和line-height属性值相等，实现 单行文字 的垂直居中。
+
+- vertical-align:middle;	实现文字、行内元素以及inline-block元素的垂直居中，块无效。
 
 
 
-表单效果
+**表单效果**
 
-~~~css
-单选框问题：
-文字与单选框对齐：通过vertical-align:-..px方式对齐
-文字为12px	-->	vertical-align:-3px;
-文字为14px	-->	vertical-align:-2px;
+- 单选框问题：
 
-textarea文本域	
-固定大小，禁用拖动	用width、height、resize:none;来固定禁拖。
-相同外观，滚条适应	用width、height、overflow:auto;定义滚条自适应。
-总结:	
-textarea{
-	width:100px;
-	height:80px;
-	overflow:auto;
-	resize:none;
-}
-~~~
+  文字与单选框对齐：通过vertical-align:-..px方式对齐
+  文字为12px	-->	vertical-align:-3px;
+  文字为14px	-->	vertical-align:-2px;
+
+- textarea文本域：
+
+  固定大小，禁用拖动	用width、height、resize:none;来固定禁拖。
+  相同外观，滚条适应	用width、height、overflow:auto;定义滚条自适应。
+  总结:	
+  textarea{
+  ​	width:100px;
+  ​	height:80px;
+  ​	overflow:auto;
+  ​	resize:none;
+  }
 
 
 
 有关**浮动**
 
-~~~css
-对自身影响：转化为块元素，即display:block;
-对父元素的影响：如果浮动元素高度大于父元素或者父元素无高度，发生塌陷(无高)。
-对子元素的影响：如果一个元素是浮动元素(无height),子元素也是浮动元素，则自适应。
+- 对自身影响：转化为块元素，即display:block;
+- 对父元素的影响：如果浮动元素高度大于父元素或者父元素无高度，发生塌陷(无高)。
+- 对子元素的影响：如果一个元素是浮动元素(无height),子元素也是浮动元素，则自适应。
 
 清除浮动：
-1)overflow:hidden;	应用于浮动元素的父元素
-2)clear:both;	添加了多余的div标签
-3)::after	实际开发中，用::after伪元素结合clear:both; 来实现
-.clearfix{*zoom:1;}
-clearfix:after
-{
-	clear:both;
-	content:””;
-	display:block;
-	height:0;
-	visibility:hidden;
-}
-~~~
+
+1. overflow:hidden;	应用于浮动元素的父元素
+2. clear:both;	添加了多余的div标签
+3. ::after	实际开发中，用::after伪元素结合clear:both; 来实现
+   .clearfix{*zoom:1;}
+   clearfix:after
+   {
+   ​	clear:both;
+   ​	content:””;
+   ​	display:block;
+   ​	height:0;
+   ​	visibility:hidden;
+   }
 
 
 
 有关**定位**
 
-~~~css
-position:absolute;	会将元素转换为块元素。实现子元素相对父元素定位，给父元素定义position:relative; 子元素定义position:absolute;配合top,bottom,left,right来定位。
-绝对定位元素是相对于第一个设置了position:relative;position:absolute;position:fixed;的祖先元素进行定位的。
-z-index只有在元素定义position:relative;position:absolute;position:fixed;才会被激活。
-~~~
+- position:absolute;会将元素转换为块元素。实现子元素相对父元素定位，给父元素定义position:relative; 子元素定义position:absolute;配合top,bottom,left,right来定位。
+- 绝对定位元素是相对于第一个设置了position:relative;position:absolute;position:fixed;的祖先元素进行定位的。
+- z-index只有在元素定义position:relative;position:absolute;position:fixed;才会被激活。
 
