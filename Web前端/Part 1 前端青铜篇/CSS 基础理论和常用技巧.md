@@ -75,43 +75,39 @@ id：100
 
 **字体和文本**
 
-~~~css
-    font-family    			字体类型(微软雅黑，宋体，黑体...)
-	font-size	   			字体大小(px, em)
-    font-color/color     	字体颜色
-	font-weight  			粗细(bold, bolder, 100~900)
-	font-style	    		样式(normal, italic, oblique斜体)
-	font-variant			变形(small-caps小型大写字母)
-	vertical-align  		对行内元素垂直对齐起作用
-		【值：top, baseline, textTop, middle, textBottom, bottom, +-(15px)/+-(xx%)】
-	line-height				设置行高
-	word-spacing 			单词间隙(空格判断)
-	letter-spacing 			字母间隙
-	text-transform			文本变化: capitalize(首字母大写) uppercase/lowercase(大小写)
-	text-decoration			文本装饰:underline下划线 overline上划线 line-through删除线 										blink闪烁  none 全无
-	text-indent				缩进文字
-~~~
+- font-family    		字体类型(微软雅黑，宋体，黑体...)
+- font-size	   			字体大小(px, em)
+- font-color/color     	字体颜色
+- font-weight  			粗细(bold, bolder, 100~900)
+- font-style	    		样式(normal, italic, oblique斜体)
+- font-variant			变形(small-caps小型大写字母)
+- vertical-align  		对行内元素垂直对齐起作用
+  ​	【值：top, baseline, textTop, middle, textBottom, bottom, +-(15px)/+-(xx%)】
+- line-height				设置行高
+- word-spacing 			单词间隙(空格判断)
+- letter-spacing 			字母间隙
+- text-transform			文本变化: capitalize(首字母大写) uppercase/lowercase(大小写)
+- text-decoration			文本装饰:underline下划线 overline上划线 line-through删除线 										blink闪烁  none 全无
+- text-indent				缩进文字
+
+
 
 **列表和背景**
 
-~~~css
-背景系列：
-background-color  	背景色
-border:				边框 合并写法: 1px solid/dashed black;
-background:			背景图片 #000 合并写法: url(img/pic.jpg) no-repeat fixed;	
-		     repeat 重复，分为no-repeat不重复；repeat-x水平重复；repeat-y垂直重复
-			 fixed滚动设置，分为fixed不滚动；scroll滚动(background-attachment的属性)
-
-background-position:背景定位 center top bottom left right;	
-opacity:			透明度设置 0 ~ 1;		
-列表系列：
-list-style-type:	列表项的样式选择
-	无序列表值：disc实心圆	circle空心圆	square实心方块
-	有序列表值：decimal数字	upper/lower-alpha	英文	upper/lower-roman罗马数字
-
-list-style-image:	植入图片图标
-list-style-position:定位图标位置 outside/inside
-~~~
+- 背景系列：
+  - background-color：背景色
+  - border:	边框 合并写法: 1px solid/dashed black;
+  - background：背景图片 #000 合并写法: url(img/pic.jpg) no-repeat fixed;	
+    ​		     repeat 重复，分为no-repeat不重复；repeat-x水平重复；repeat-y垂直重复
+    ​			 fixed滚动设置，分为fixed不滚动；scroll滚动(background-attachment的属性)
+  - background-position：背景定位 center top bottom left right;	
+  - opacity:	透明度设置 0 ~ 1;	
+- 列表系列：
+  - list-style-type:	列表项的样式选择
+    ​	无序列表值：disc实心圆	circle空心圆	square实心方块
+    ​	有序列表值：decimal数字	upper/lower-alpha	英文	upper/lower-roman罗马数字
+  - list-style-image:	植入图片图标
+  - list-style-position:定位图标位置 outside/inside
 
 **常用系列**
 
@@ -142,31 +138,31 @@ list-style-position:定位图标位置 outside/inside
 
 #### CSS盒子模型
 
-~~~
 H5的 !doctype 采用标准盒子模型(含外边距)
-margin外填充
-border边框，[width][color][style]	style分为solid\dotted\dashed
-padding内填充	
-	两值：上下，左右
-	三值：上，左右，下
-	四值：上，右，下，左 (顺时针)
-width内容宽度
-height内容高度
-display：inline;(块级元素行内化) 
-		 block;(行内元素块级化)
-		 inline-block;(行内块元素)
-行内元素没有上下外边距。
+
+- margin外填充
+- border边框，[width][color][style]	style分为solid\dotted\dashed
+- padding内填充	
+  ​	两值：上下，左右
+  ​	三值：上，左右，下
+  ​	四值：上，右，下，左 (顺时针)
+- width内容宽度
+- height内容高度
+- display：inline;(块级元素行内化) 
+  ​		 block;(行内元素块级化)
+  ​		 inline-block;(行内块元素)
+
+ps：行内元素没有上下外边距。
 还有混杂盒模型，将在黄金段位揭晓
 
 💗 inline-block 元素间默认有边距，去除方法是在父级添加 font-size:0
-	几个 img 一起时同理，用font-size:0 去除制表符
-~~~
+​	几个 img 一起时同理，用font-size:0 去除制表符
 
 
 
 #### CSS定位
 
-~~~
+~~~css
 position:
 	static 自然定位：免疫top/bottm控制
 	relative相对定位：不离开常规流，可使浮动元素发生偏移
