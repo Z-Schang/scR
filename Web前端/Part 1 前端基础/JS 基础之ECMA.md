@@ -226,7 +226,9 @@
 
      ~~~javascript
      function Person(name, sex){
-         // var this;
+         // var this = {
+         //    __proto__: Person.prototype
+     	//};
          this.name = name;
          this.sex = sex;
          this.skill = function(){
@@ -327,6 +329,25 @@
          }
      }
      // hasOwnProperty：用来检测一个对象是否含有特定的自身属性；和 in 运算符不同，该方法会忽略掉那些从原型链上继承到的属性。
+     ~~~
+
+   - 深度克隆
+
+     ~~~javascript
+     function deepClone(ori, tar){
+         var tar = tar || {};
+         for(var prop in ori){
+             if(ori.hasOwnProperty(prop)){
+                 if(ori[prop] != null && typeof(ori[prop]) == "object"){
+                     tar[prop] = (Object.prototype.toString.call(ori[prop]) == "[object Array]") ? [] : {};
+                     deepClone(ori[prop],tar[prop])
+                 }else{
+                     tar[prop] = ori[prop]
+                 }
+             }
+         }
+         return tar;
+     }
      ~~~
 
 5. **包装类**
@@ -433,5 +454,218 @@
    new myFunc();//此时上面发生
    ~~~
 
-   习题部分，明天继续~
+   ~~~javascript
+   // 习题：
+   var name = "222";
+   var a = {
+       name: "zsc",
+       say : function(){
+       	console.log(this.name);
+   	}
+   }
+   var fun = a.say;
+   fun();	// 222
+   a.say();  //zsc
+   var b = {
+       name : "333",
+       say : function(fun){
+           //this => b
+           //a.say;
+           fun();//这个为全局，若要局部，则前面应该加 this
+       }
+   }
+   b.say(a.say);  //222↑
+   b.say = a.say; //此时b中的say被a的say替换
+   b.say();       //333
+   //变式
+   var b = {
+       name : "333",
+       say : function(fun){
+           console.log(this);
+       }
+   }
+   b.say(a.say);	// Object(name: '333', say: f);
+   b.say();		// Object(name: '333', say: f);
+   //自调用
+   //再变
+   var b = {
+       name : "333",
+       say : function(fun){
+           test();//全局函数
+       }
+   }
+   b.say(a.say); // 222
+   b.say(); // 222
+   function test(){
+       console.log(this.name);
+   }
+   ~~~
+
+   arguments 【严格禁用】
+
+   - arguments.callee : 指向自身函数调用
+
+   - callee 为函数身上的属性，非 arguments 独有
+
+   - ~~~javascript
+     // 1 判断自身函数
+     function test(n){
+         return arguments.callee == test;
+     };  
+     test();  // true
+     
+     // 2 100阶乘
+     var num = (function(n){
+         if(n == 1){
+             return 1;
+         }
+         return n * arguments.callee(n - 1);
+     })(100);
+     ~~~
+
+8. **数组**
+
+   - 创建数组
+     - var arr = [ ];
+     - var arr = new Array();
+     - var arr = new Array(10);   // 10个空位
+   - Read and write
+     - arr[i]
+     - arr[i] = xxx;
+
+   改变原数组的操作：
+
+   |               函数名                |                功能                |
+   | :---------------------------------: | :--------------------------------: |
+   |            arr.push('c')            |              后插数据              |
+   |          arr.unshift('c')           |              前插数据              |
+   |              arr.pop()              |    剪切最后一个数据【参数无效】    |
+   | arr.sort(function(a,b){return a-b}) |       排序，>0 升序；<0降序        |
+   |            arr.reverse()            |                逆序                |
+   |         arr.splice(2,1,5,5)         | 切片，从索引二删除一个然后插入5, 5 |
+   |            arr.shift();             |            删第一个数据            |
+
+   不改变原数组的操作：
+
+   |        函数名        |                 功能                  |
+   | :------------------: | :-----------------------------------: |
+   | arr.concat(arr,arr2) |               拼接数组                |
+   |    arr.join("-")     |         数组以"-"连接成字符串         |
+   |   str.split("-");    | 字符串"-"分割为数组，必须至少带双引号 |
+   |   arr.toString();    |        数组转字符串，"1,2,3,4"        |
+   |  slice(here, end);   |        截取，从某处截取到某处         |
+
+   应用
+
+   ~~~javascript
+   var arr = [1,2,3,4,5,6,7,8,9,];
+   arr.splice(1,2);// [2,3]
+   arr.splice(1,1,5,5);// [1,5,5,3,4,5,6,7,8,9]
+   
+   var arr2 = [5,4,9,7,2];
+   arr2.sort(function(a,b){return a - b}); // 升序
+   arr2.sort(function(a,b){return b - a}); // 降序
+   ~~~
+
+9. **类数组**
+
+   **什么是类数组？有什么功能？**
+
+   具有对象和数组的属性的对象
+
+   - 可以用属性名模拟数组特性
+   - 调用push时可以动态添加length
+   - 属性为索引(num)，必须有length属性，最好有push属性
+
+   ~~~javascript
+   // 类数组实例
+   function test(){
+       console.log(arguments);
+   }
+   test(1,2,3,4);
+   //打印的就是类数组
+   
+   var obj = {
+       "0": "a",
+       "1": "b",
+       "2": "c",
+       "spec": "this is no a item of arr",
+       "length": 3,
+       "push": Array.prototpye.push,
+       "splice": Array.prototype.splice //必写，确保打印出数组模型
+   }
+   
+   ~~~
+
+10. **catch...try**
+
+   - try 里面发生错误，不执行错误语句后面的代码
+   - var a = abcd; ==>  referenceError 非法引用
+   - va a = "abcd"; ==>  syntaxError 语法解析错误
+
+   ~~~javascript
+   try{
+       console.log("a");
+       console.log(b);
+       console.log("c");
+   }catch(e){
+       console.log(e.name + " : " + e.message);
+   }
+   console.log("d");
+   // a
+   // ReferenceError : b is not defined
+   // d
+   ~~~
+
+11. ES5
+
+    - ES5 严格模式，规范了语法，使开发更有秩序
+
+    - 严格模式下，ES3 和 ES5 冲突，优先使用 5.0
+
+    - 启用 5.0 的方法：
+
+      - 全局：页面逻辑顶端写"use strict"
+      - 局部：局部函数第一句写"use strict"
+
+    - 5.0 规定变量必须声明，this 指向谁就是谁
+
+      ~~~javascript
+      console.log(this);
+      function test(){
+          console.log(this);
+      }
+      test();// undefined
+      new Test();// Test{} 即该对象的constructor名
+      Test.call({});// object{}
+      Test.call(123);// 123
+      ~~~
+
+    - 5.0 禁止重复参数
+
+      ~~~javascript
+      function test(name, name){}//禁止重复参数
+      ~~~
+
+    - 禁用 arguments.callee
+
+    - 禁用 eval("")
+
+      ~~~javascript
+      eval("console.log('avc');"); //直接执行
+      ~~~
+
+    -  禁用 with(sth) 【改变作用域链，使代码成为sth的AO，直接访问sth，功能强大，影响效率】
+
+      ~~~javascript
+      var obj = {name: "obj"};
+      var name = 'window';
+      function test(){
+          var name = "scope";
+          with(obj){
+              console.log(name); // 直接找obj里的name，再找test，最后找window(GO)
+          }
+      }
+      ~~~
+
 
