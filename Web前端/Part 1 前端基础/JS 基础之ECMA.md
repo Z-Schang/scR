@@ -72,9 +72,7 @@
 
    JS引擎执行JS先后进行了：语义分析 => 预编译 => 解释执行【听 => 转换 => 说】
 
-
-
-   **预编译发生在什么时候？在脚本代码script执行前，函数执行前都发生了什么？**
+   **预编译发生在什么时候？在脚本代码script执行前，函数执行前都发生了什么？**  
 
    JS引擎工作流程：
 
@@ -87,20 +85,19 @@
 
    对于函数执行前，预编译做4件事
 
-   1. 创建AO对象
-   2. 查找函数形参、函数内部变量声明，形参名和变量名作为AO对象属性，值为undefined
-   3. 实形统一，实参赋给形参
-   4. 查找函数声明，函数名作为AO对象属性，值为函数引用
+   1. 创建AO对象查找函数形参、函数内部变量声明，形参名和变量名作为AO对象属性，值为undefined
 
-   注：页面产生时创建了一个GO全局对象(window)，加载第一个脚本文件，加载完毕后分析语法是否合法，开始预编译，GO预编译完后开始执行，遇到执行函数才生成AO。若GO和AO有同个预编译项，AO执行时优先使用AO。
+   2. 实形统一，实参赋给形参查找函数声明，函数名作为AO对象属性，值为函数引用
+
+      注：页面产生时创建了一个GO全局对象(window)，加载第一个脚本文件，加载完毕后分析语法是否合法，开始预编译，GO预编译完后开始执行，遇到执行函数才生成AO。若GO和AO有同个预编译项，AO执行时优先使用AO。
 
    ~~~javascript
    global = 100;
    function fn(){
-   	console.log(global); 	//undefined, AO自己有global
-   	global = 200;
-   	console.log(global);	//200
-   	var global = 300;
+      	console.log(global); 	//undefined, AO自己有global
+      	global = 200;
+      	console.log(global);	//200
+      	var global = 300;
    }
    fn();
    var global;
@@ -116,7 +113,6 @@
    test();//生成AO
    console.log(a);//GO{a : 5}
    ~~~
-
 
 
 3. **作用域和闭包**

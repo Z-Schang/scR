@@ -316,3 +316,117 @@ sth,removeEventListener('click', test, false)
   // 加载完执行
   window.onload =function(){}
   ~~~
+
+****
+
+#### JSON、异步加载和时间线
+
+- xml格式传送数据，旧式方案
+
+- 现代用json，格式如下
+
+  ~~~javascript
+  '{
+  	"name": "ZSC",
+      "age": 24
+  }'
+  ~~~
+
+- string和JSON的互相转化
+
+  ~~~javascript
+  JSON.stringify(obj);  //转为json格式【前转后】
+  JSON.parse(str);   //转为对象格式【后转前】
+  ~~~
+
+- 有关renderTree
+
+  1. 识别HTML代码生成DOM树
+
+  2. CSS树生成
+
+  3. domTree + cssTree = randerTree
+
+     renderTree 更新：
+
+     - reflow: 重排整个页面，DOM的增删，变化，位置
+     - repaint: 重绘小部分，如color，background的改变
+
+- 异步加载
+
+  JS原始加载缺点：遇到script标签总会阻塞文档，过多会影响页面效率，对于JS工具方法可以使用异步加载来载入。
+
+  按需加载的方法：
+
+  ~~~html
+  IE：异步加载，等DOM全解析完再执行
+  <script ... defer>...</script>
+  W3C：异步加载，异步加载完就执行，只用于外部脚本
+  <script ... aysnc>...</script>
+  【思考：如何封装下载完执行函数】
+  ~~~
+
+- JS时间线
+
+  【创建Document对象；文档解析；加载执行】
+
+  1. 创建Document对象，解析web页面，开始解释HTML元素。此时document.readyState = 'loading';
+
+     ~~~javascript
+     var Document = {}
+     StartTakepartWebPage;
+     html...[loading]
+     ~~~
+
+  2. 遇到 外联CSS ，异步加载，继续解析文档
+
+     ~~~javascript
+     css...
+     ~~~
+
+  3. 遇到 不含aysnc、defer的外部JS，阻塞，等待完成继续解析文档
+
+     ~~~
+     js...
+     ~~~
+
+  4. 遇到 含aysnc、defer的JS，异步加载，继续解析文档
+
+     ~~~
+     js...
+     continue...
+     ~~~
+
+  5. 遇到 img，先解析结构，异步加载src，继续解析文档
+
+     ~~~
+     
+     ~~~
+
+  6. 文档解析完，document.readyState = "interative"，代表DOM已经构建完成
+
+     ~~~
+     [interative](可交互)
+     ~~~
+
+  7. 文档解析完，defer脚本按序执行
+
+     ~~~
+     注：aysnc异步加载完直接执行，defer异步加载后等到文档解析完再执行
+     ~~~
+
+  8. 同步脚本执行阶段转为事件驱动阶段
+
+     ~~~
+     DOMContentLoaded【dom内容加载】
+     ~~~
+
+  9. aysnc加载完，执行后，img的src加载完成后，document.readyState = 'complete'，window对象触发load事件
+
+     ~~~javascript
+     [complete]
+     window.onload = function(){}
+     ~~~
+
+  10. 以**异步相应方式**处理用户输入网络事件等
+

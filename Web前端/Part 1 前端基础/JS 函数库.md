@@ -73,3 +73,38 @@ setInterval(function(){
 }, 1000);
 ~~~
 
+****
+
+#### 正则表达式
+
+- 正则表达式是匹配特殊字符串或有特殊搭配原则字符的最佳选择
+
+~~~javascript
+语句：
+reg.text(str);//str字符串是否满足reg正则的规则
+str.match(reg);//找出str中满足reg正则的集合类数组
+
+创建：
+var reg = new RegExp("abc", "i");
+// 或：
+var reg = new RegExp(/abc/i);
+
+大规则：
+/i：忽略大小写属性(ignore)
+/g：全局匹配(global)
+/m：多行匹配(mult)
+实例：
+var reg = /[0-9A-z]/g;//任选1位
+var reg = /(abc|def)[0-9]/g;//全局匹配以 abc/def 开头拼接数字的串
+
+小规则：
+\w：[0-9A-z]word
+\d：[0-9]dig
+\s：[\t\n\r\v\f] 空格 space
+实例：
+var reg = new RegExp(/\bcde/g);	
+var str = "abc cde fgh";
+str.match(reg);
+
+~~~
+
