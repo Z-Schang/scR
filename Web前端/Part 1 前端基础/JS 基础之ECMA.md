@@ -14,8 +14,8 @@
 
    基本类
 
-   - Undefined
-   - Null
+   - Undefined：空原始值，本该有值却没定义，转为数值为NaN
+   - Null：空对象，转为数值为0
    - Boolean
    - Number
    - String
@@ -35,6 +35,9 @@
    null===undefined  false
 
    **数据类型转换**
+
+   - 强制类型转换：parseInt();     parseFloat();     Number();
+   - 隐式类型转换：==  +
 
    - 将字符转为数值：
 

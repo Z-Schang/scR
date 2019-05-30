@@ -110,7 +110,8 @@ DOM，document object module 文档对象模型，是HTML和XML的标准编程�
 
   ~~~javascript
   // 属性：
-  .innerHTML
+  .innerHTML  // 获得元素内包含的内容
+  .outerHTML  // 获得元素的标签和内容
   .innerText  // 老火狐没有
   .textContent  // 老IE没有
   // 方法：
