@@ -1,4 +1,4 @@
-# 畅想世界
+# 畅想世界2
 Hello,
 
 I am Zhang, this is my blog.
