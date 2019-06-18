@@ -82,6 +82,8 @@ mailto 不用驼峰命名喔！
 <a href=”ftp/ftp.rar”>文件下载</a>
 文件下载
 ftp协议，即文件传输协议
+
+<script>如果没有src属性，async和defer会被忽略。</script>
 ~~~
 
 
